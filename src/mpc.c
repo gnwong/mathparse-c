@@ -150,13 +150,14 @@ double mathparse (const char *ineqn, ...) {
   }
 
   // Perform housekeeping
+  double retval = val_stack[0]->value;
   while (rpn != NULL) {
     c = rpn;
     rpn = rpn->next;
     mpc_free_token(c);
   }
 
-  return val_stack[0]->value;
+  return retval;
 }
 
 struct mpc_token *mpc_tokenize (const char *eqn, int *n_ops, int *n_others, int *n_vars) {
