@@ -21,7 +21,7 @@
 
 #include "mpc.h"
 
-double mathparse (const char *ineqn, ...) {
+double mpc_eval (const char *ineqn, ...) {
 
   int i,j;
   int eqnlen;
@@ -50,11 +50,12 @@ double mathparse (const char *ineqn, ...) {
 
   // Attach input to variables (if applicable)
   if (n_vars != 0) {
+    int set_vars = 0;
     va_list list;
     va_start(list, ineqn);
     vectorsize = va_arg(list, int);
     vectorout = va_arg(list, double**);
-    for (i=0; i<n_vars; ++i) {
+    while (set_vars < n_vars) {
       char   *tmp_name = va_arg(list, char*);
       double *tmp_loc  = va_arg(list, double*);
       struct mpc_token *t = token_head;
@@ -63,6 +64,7 @@ double mathparse (const char *ineqn, ...) {
           if (strcmp(t->varname, tmp_name) == 0) {
             t->values = (double *)malloc(sizeof(double) * vectorsize);
             memcpy(t->values, tmp_loc, sizeof(double) * vectorsize);
+            set_vars ++;
           }
         }
         t = t->next;

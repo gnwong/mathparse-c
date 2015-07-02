@@ -15,17 +15,20 @@ int main (int argc, char **argv) {
   double b[5] = {0.0, 1.0, 2.0, 3.0, 4.0};
   double *out = NULL;
   strcpy(line, "a * b");
-  printf("%s evalulates to %f\n", line, mathparse(line, 5, &out, "a", a, "b", b));
-  for (int i=0; i<5; ++i) {
-    printf("%d -> %f\n", i, out[i]);
-  }
+  printf("%s evalulates to %f\n", line, mpc_eval(line, 5, &out, "a", a, "b", b));
+  for (int i=0; i<5; ++i) printf("%d -> %f\n", i, out[i]);
+  free(out);
+
+  strcpy(line, "a * 4");
+  printf("%s evalulates to %f\n", line, mpc_eval(line, 5, &out, "a", a, "b", b));
+  for (int i=0; i<5; ++i) printf("%d -> %f\n", i, out[i]);
   free(out);
 
   // BC-like interpreter
   while (1) {
     gets(line);
     if (strcmp(line,"quit") == 0) break;
-    printf("%f\n", mathparse(line));
+    printf("%f\n", mpc_eval(line));
   }
 
   return 0;

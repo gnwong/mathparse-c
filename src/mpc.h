@@ -28,7 +28,7 @@ struct mpc_token {
 };
 
 // MathParse functions
-double mathparse(const char *eqn, ...);
+double mpc_eval(const char *eqn, ...);
 void mpc_free_token(struct mpc_token *tkn);
 struct mpc_token *mpc_tokenize(const char *eqn, int *n_ops, int *n_others, int *n_vars);
 void mpc_bop(struct mpc_token *one, struct mpc_token *two, struct mpc_token *bop, int n);
